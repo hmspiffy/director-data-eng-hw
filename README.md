@@ -1,5 +1,13 @@
 # Director of Data Engineering Homework
 
+## Overview
+
+Hi! In this homework, we will provide a bunch of data in S3, and we will ask you to model it in a useful way. The contents of the data are **ratings**, which are any number of basic interactions between two. For example, if I send a like to you, and then you see me pop up and decide to match with me, two ratings have occurred: the "like" rating and the "match" rating.
+
+Ratings are some of the most important data we have at Hinge — everything from our recommendation engine to our product decisions to our lifecycle marketing campaigns to the effectivteness of our member services team depends on ratings being highly available and accurate. Hinge currently processes over a billion ratings a month, and one of the top priorities for an incoming data engineering lead would be to build a system that can handle the massive growth we expect to undergo in the coming years. 
+
+First, we'll go into way too much detail
+
 ## Dataset Explanation
 At Hinge, we track **ratings** between users. A rating is any of a number of actions that one user can take on another. 
 
@@ -33,7 +41,7 @@ In this dataset, these ratings are represented by the following numbers:
 | 5           | match                             |
 
  
-## Rating Rules 
+### Rating Rules 
 If a pair of users has either never interacted before, or only sent skips between themselves, they are able to perform any rating on each other, except match.
 
 If a User A has sent a like to User B (`rating_type` 1 or 2), User A is unable to send another rating to User B until B responds. B is able to respond only with `rating_type` 3 to reject the incoming like, 4 to report User A for bad behavior, or 5 to match with User A and start chatting.
@@ -54,21 +62,24 @@ So an example series of ratings might look like this:
 
 In this situation, User A skips User B a couple times before finally sending a like. User B reciprocates. User A then looks a little closer at the rest of User B’s photos and removes User B from his/her list of matches, and they never see each other again. 
 
+I've also made a diagram in case that helps. Here, the rounded rectangles are screens in the app, and the circles are ratings that are available from certain screens. Ratings 3 and 4 are marked red as a reminder that they are terminal. Rating 0 is market yellow as a reminder that it can be repeated any number of times by either user until another rating occurs.
+
+![ratings](/ratings.svg)
+
 The files in the S3 bucket have the same schema as in this example.
 
 ## The Homework
 A month of fake ratings data are stored at s3://hinge-homework/director-data-engineering/ratings. We will be designing an ELT pipeline to make this stuff useful.
 
 1. Spin up a database to store these ratings. As a reminder, Hinge uses Redshift, but feel free to use whatever is easiest for you.
-2. Create a table in your DB for each file in the S3 bucket, with each table name equalling its corresponding file name. For example, you will have a table called `fake_ratings_2018-02-01_0000_part_00`. You will have many tables.
-3. Design a schema that easily enables analysis on this dataset. Write whatever code you need to write to actually transform the ratings data into your schema. Below we've included some sample analysis questions which may be helpful as reference.
-4. Totally optional and not necessary extra credit: perform one of the below analyses on the dataset to show us how easy you made it, or show us something cool that you found yourself in the data.
+2. Design a schema that easily enables analysis on this dataset. Write whatever code you need to write to actually transform the ratings data into your schema. Below we've included some sample analysis questions which may be helpful as reference.
+3. Totally optional and not necessary extra credit: perform one of the below analyses on the dataset to show us how easy you made it, or show us something cool that you found yourself in the data.
 
 In working on this homework, please work in a fork of this repo, and let us know when we can check out your code. We should be able to run your code with little difficulty. At Hinge, we use Bash and Python scripts to wrap these kinds of operations, but if you prefer something else, anything that we can run is fine. 
 
 In the root directory of your fork, include a writeup justifying your ideas and methods. Consider how your method will scale and offer longer-term improvements.
 
-As a reminder, a major part of this role is to be a technical lead. For this homework, we care more about elegance and robustness than completion.
+For this homework, we care most about wisdom in modeling the data and elegance in the methods of doing so. As the principal data engineer at Hinge, you will be setting the example for coding style and best practices.
 
 #### Example questions for analysis, in order of increasing vagueness/realism:
 * What is the average like rate (likes/(likes+skips))?
@@ -81,8 +92,6 @@ As a reminder, a major part of this role is to be a technical lead. For this hom
 
 #### Some considerations:
 * A single `rating_type` can have multiple semantic meanings. For example, a `rating_type` of 3 either means “Remove this person from the list of people I can send likes to”, “Reject this person’s incoming like”, or “Remove this person from my list of matches”, depending on the preceding ratings between a pair of users. 
-* Assume that every day, another file is added to this S3 bucket, and that you can’t predict the exact names of future files. How will you make sure that your load script catches these? How will you make sure that your transform script can find non-deterministically named tables?
+* Assume that every day, another file is added to this S3 bucket, and that you can’t predict the exact names of future files. How will you make sure that you will catch these and include them in your final model?
 * In the final schema, do we really need a row for every rating?
-
-
 
