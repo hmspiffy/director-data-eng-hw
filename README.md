@@ -62,7 +62,7 @@ So an example series of ratings might look like this:
 
 In this situation, User A skips User B a couple times before finally sending a like. User B reciprocates. User A then looks a little closer at the rest of User B’s photos and removes User B from his/her list of matches, and they never see each other again. 
 
-I've also made a diagram in case that helps. Here, the rounded rectangles are screens in the app, and the circles are ratings that are available from certain screens. Ratings 3 and 4 are marked red as a reminder that they are terminal. Rating 0 is market yellow as a reminder that it can be repeated any number of times by either user until another rating occurs.
+I've also made a diagram in case that helps. Here, the rounded rectangles are screens in the app, and the circles are ratings that are available from certain screens. Ratings 3 and 4 are marked red as a reminder that they are terminal. Rating 0 is marked yellow as a reminder that it can be repeated any number of times by either user until a different kind of rating occurs.
 
 ![ratings](/ratings.svg)
 
