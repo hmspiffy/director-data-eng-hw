@@ -6,7 +6,7 @@ Hi! In this homework, we will provide a bunch of data in S3, and we will ask you
 
 Ratings are some of the most important data we have at Hinge — everything from our recommendation engine to our product decisions to our lifecycle marketing campaigns to the effectivteness of our member services team depends on ratings being highly available and accurate. Hinge currently processes over a billion ratings a month, and one of the top priorities for an incoming data engineering lead would be to build a system that can handle the massive growth we expect to undergo in the coming years. 
 
-First, we'll go into way too much detail
+First, we'll go into way too much detail about what these ratings are and how they interact, then we'll follow that up with the actual problem description as well as some considerations/gotchas. Have fun!
 
 ## Dataset Explanation
 At Hinge, we track **ratings** between users. A rating is any of a number of actions that one user can take on another. 
@@ -77,7 +77,7 @@ A month of fake ratings data are stored at s3://hinge-homework/director-data-eng
 
 In working on this homework, please work in a fork of this repo, and let us know when we can check out your code. We should be able to run your code with little difficulty. At Hinge, we use Bash and Python scripts to wrap these kinds of operations, but if you prefer something else, anything that we can run is fine. 
 
-In the root directory of your fork, include a writeup justifying your ideas and methods. Consider how your method will scale and offer longer-term improvements.
+In the root directory of your fork, include a writeup justifying your ideas and methods. Consider how your method will scale and offer longer-term improvements. We don't expect your solution to hold up under stress, but we're very interested in your explanations of what will need to change for your solution to be productionized.
 
 For this homework, we care most about wisdom in modeling the data and elegance in the methods of doing so. As the principal data engineer at Hinge, you will be setting the example for coding style and best practices.
 
@@ -91,7 +91,6 @@ For this homework, we care most about wisdom in modeling the data and elegance i
 * How often do people change their mind about the people they like?
 
 #### Some considerations:
-* A single `rating_type` can have multiple semantic meanings. For example, a `rating_type` of 3 either means “Remove this person from the list of people I can send likes to”, “Reject this person’s incoming like”, or “Remove this person from my list of matches”, depending on the preceding ratings between a pair of users. 
-* Assume that every day, another file is added to this S3 bucket, and that you can’t predict the exact names of future files. How will you make sure that you will catch these and include them in your final model?
-* In the final schema, do we really need a row for every rating?
-
+* A single `rating_type` can have multiple semantic meanings. For example, a `rating_type` of 3 either means “Remove this person from the list of people I can send likes to”, “Reject this person’s incoming like”, or “Remove this person from my list of matches”, depending on the preceding ratings between a pair of users. It's important that your model be able to distingush between these different meanings.
+* What if it were the case that every day, more files is added to this S3 bucket, and that you can’t even predict their exact names. How will you make sure that you will catch these and include them in your final model?
+* What kinds of tests will you put in place to make sure that the final model is accurate? What about to ensure that the source data is accurate?
