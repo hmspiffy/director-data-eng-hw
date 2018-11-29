@@ -4,7 +4,7 @@
 
 Hi! In this homework, we will provide a bunch of data in S3, and we will ask you to model it in a useful way. The contents of the data are **ratings**, which are any number of basic interactions between two. For example, if I send a like to you, and then you see me pop up and decide to match with me, two ratings have occurred: the "like" rating and the "match" rating.
 
-Ratings are some of the most important data we have at Hinge — everything from our recommendation engine to our product decisions to our lifecycle marketing campaigns to the effectivteness of our member services team depends on ratings being highly available and accurate. Hinge currently processes over a billion ratings a month, and one of the top priorities for an incoming data engineering lead would be to build a system that can handle the massive growth we expect to undergo in the coming years. 
+Ratings are some of the most important data we have at Hinge — everything from our recommendation engine to our product decisions to our lifecycle marketing campaigns to the effectiveness of our member services team depends on ratings being highly available and accurate. Hinge currently processes over a billion ratings a month, and one of the top priorities for an incoming data engineering lead would be to build a system that can handle the massive growth we expect to undergo in the coming years. 
 
 First, we'll go into way too much detail about what these ratings are and how they interact, then we'll follow that up with the actual problem description as well as some considerations/gotchas. Have fun!
 
@@ -69,10 +69,10 @@ I've also made a diagram in case that helps. Here, the rounded rectangles are sc
 The files in the S3 bucket have the same schema as in this example.
 
 ## The Homework
-A month of fake ratings data are stored at s3://hinge-homework/director-data-engineering/ratings. We will be designing an ELT pipeline to make this stuff useful.
+A month of fake ratings data are stored at s3://hinge-homework/director-data-engineering/ratings. We will be designing a  pipeline to make this stuff useful.
 
 1. Spin up a database to store these ratings. As a reminder, Hinge uses Redshift, but feel free to use whatever is easiest for you.
-2. Design a schema that easily enables analysis on this dataset. Write whatever code you need to write to actually transform the ratings data into your schema. Below we've included some sample analysis questions which may be helpful as reference.
+2. Design a schema that easily enables analysis on this dataset. Write whatever code you need to write to actually transform and load the ratings data into your schema. Below we've included some sample analysis questions which may be helpful as reference.
 3. Totally optional and not necessary extra credit: perform one of the below analyses on the dataset to show us how easy you made it, or show us something cool that you found yourself in the data.
 
 In working on this homework, please work in a fork of this repo, and let us know when we can check out your code. We should be able to run your code with little difficulty. At Hinge, we use Bash and Python scripts to wrap these kinds of operations, but if you prefer something else, anything that we can run is fine. 
